@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -20,7 +21,10 @@ func printReader(r io.ReadCloser) {
 }
 
 func main() {
-	ss, err := net.Listen("tcp", ":6288")
+	bind := flag.String("bind", ":8080", "Address to which to bind the TCP socket")
+	flag.Parse()
+
+	ss, err := net.Listen("tcp", *bind)
 	if err != nil {
 		log.Fatal(err)
 	}
